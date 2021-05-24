@@ -11,6 +11,7 @@ class LoginController extends Controller
         $this->login = new LoginModel();       
     }
     
+    // show login form
     public function index()    {  
 
         $session = session();  
@@ -18,6 +19,7 @@ class LoginController extends Controller
     return view('login');
     }      
 
+    //check user is exist or not
     public function login(){
           
         $data = array('user_name'=>$this->request->getVar('user_id'),'password'=>md5($this->request->getVar('password')));       
@@ -25,7 +27,8 @@ class LoginController extends Controller
         $rows = $this->login->countAllResults();
         $session = session();          
         if($rows==1){
-            return view('success');
+            return view('success',$data);
+       
         }else{
             $session->setFlashdata('msg', 'Invalid User');
             return view('login');
